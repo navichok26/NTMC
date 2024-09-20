@@ -1,1 +1,0 @@
-g++ TDM.cpp -o TDM; ./TDM
