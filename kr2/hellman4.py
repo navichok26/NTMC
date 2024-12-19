@@ -32,13 +32,35 @@ def factorize_and_calculate(g, a, n):
         print(f"{values}|")
         print()
 
-    # Step 3: Calculate b0 and x0 for each factor
+    # Step 3: Calculate b0, x0, and subsequent values for each factor
     x_values = []
     for idx, p in enumerate(p_list):
-        b0 = pow(a, n // p, n)
-        x0 = next(key for key, value in a_values[idx].items() if value == b0)
-        print(f"b0_{idx+1} = {a}^{n // p} mod {n} = {b0}, x0_{idx+1} = {x0}")
-        x_values.append(x0)
+        j = factors[p]  # степень текущего простого числа в разложении
+        modulus = p ** j
+        g_inverse = pow(g, -1, n)  # g^(-1) mod n
+
+        y = 0
+        b = a
+        x_partial = []
+
+        # Вычисляем x0, x1, ..., x_j
+        for k in range(j):
+            b_k = pow(b, n // (p ** (k + 1)), n)  # (b * g^(-y))^(n / p^(k+1))
+            x_k = next(key for key, value in a_values[idx].items() if value == b_k)
+            x_partial.append(x_k)
+
+            # Обновляем y и b для следующей итерации
+            y += x_k * (p ** k)
+            b = (a * pow(g, -y, n)) % n
+
+        x = sum(x_partial[k] * (p ** k) for k in range(j))  # x = x0 + x1*p + x2*p^2 + ...
+        x_values.append(x)
+
+        # Выводим шаги вычислений
+        print(f"\nFor p = {p}, j = {j}:")
+        for k in range(j):
+            print(f"  b{k} = {b_k}, x{k} = {x_partial[k]}")
+        print(f"  Combined x = {x}")
 
     # Step 4: Print modular equations
     m = []
