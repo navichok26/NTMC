@@ -66,9 +66,9 @@ def adleman(g, a, n):
             log_a -= k
             log_a = log_a % (n - 1)
 
-            log(f"log{a} + {k}*log{g} = {str1[:-3]} mod {n-1}")
+            log(f"log{a} = {str1[:-3]} - {k} mod {n-1}")
             log(f"переходим к значениям логарифмов:")
-            log(f"log{a} + {k} = {str2[:-3]} mod {n-1}")
+            log(f"log{a} = {str2[:-3]} - {k} mod {n-1}")
             log(f"сокращаем и переносим")
             log(f"log{a} = {log_a} mod {n-1}")
             log(f"ответ: {log_a}")
@@ -79,9 +79,10 @@ def adleman(g, a, n):
     return None, "\n".join(output)
 
 # Example usage
-g = 6
-a = 14
-n = 109
+if __name__ == "__main__":
+    g = 6
+    a = 14
+    n = 109
 
-result, log_output = adleman(g, a, n)
-# print(log_output)
+    result, log_output = adleman(g, a, n)
+    print(log_output)

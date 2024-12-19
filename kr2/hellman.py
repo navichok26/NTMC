@@ -99,7 +99,8 @@ def hellman(g, a, n):
 
     return result, solve
 
-g = 6
-a = 14
-n = 109
-result = hellman(g, a, n)
+if __name__ == "__main__":
+    g = 6
+    a = 14
+    n = 109
+    result = hellman(g, a, n)
